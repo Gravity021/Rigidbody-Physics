@@ -3,4 +3,5 @@ if __name__ != "__main__":
 
 import unittest
 
+from app_test.core.test_window import *
 unittest.main()
