@@ -5,7 +5,11 @@ import pygame
 from app_main.core.app import *
 
 class ApplicationTests(TestCase):
+    """Test the Application class."""
+
     def test_init(self):
+        """Test the Application constructor."""
+        
         app = Application()
 
         self.assertTrue(pygame.get_init(), "Check pygame is initialised")

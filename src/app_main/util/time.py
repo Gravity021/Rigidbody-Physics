@@ -1,8 +1,14 @@
 # (c) Isaac Godman 2024
 
 import time
+from typing import Callable
 
 class Time:
+    """A static class supporting time operations.
+    
+    Keeps track of the delta time between calls (recommended once per frame), and has a system to call functions after some time delay.
+    Also supports scaling the delta time by some factor."""
+
     dt: float = 0
     true_dt: float = 0
     
@@ -16,6 +22,10 @@ class Time:
         timescale = timescale
     
     def update():
+        """Update the Time class.
+        
+        Calculate the delta time since last called, and update the delayed functions list."""
+
         time_now = time.time()
         Time.true_dt = time_now - Time._last_time
         Time._last_time = time_now
@@ -30,5 +40,13 @@ class Time:
             
                 Time._delayed_funcs.remove(func)
     
-    def add_delayed_func(delay, func, *args, **kwargs):
-        Time._delayed_funcs.append((delay, func, args, kwargs))
+    def add_delayed_func(delay: float, func: Callable, *args, **kwargs):
+        """Call a function after some delay.
+        
+        Parameters:
+        - delay (float): The delay after which to call the function.
+        - func (Callable): The method to call after some delay.
+        - *args: Any positional arguments passed to the function.
+        - **kwargs: Any keyword arguments passed to the function."""
+
+        Time._delayed_funcs.append([delay, func, args, kwargs])

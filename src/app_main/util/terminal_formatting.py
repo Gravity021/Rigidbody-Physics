@@ -1,5 +1,6 @@
 # (c) Isaac Godman 2024
 
+# A bunch of constant ANSI codes corresponding to differnet formattings
 ANSI_RESET = "\u001B[0m"
 
 ANSI_BLACK = "\u001B[30m"
@@ -68,7 +69,16 @@ ANSI_DECORATIONS = [
     ANSI_BLINK, ANSI_INVERTED, ANSI_STRIKETHROUGH
 ]
 
-def term_format(string, colours):
+def term_format(string: str, colours: list[str]) -> str:
+    """A method to neatly format a string with ANSI codes.
+    
+    Parameters:
+    - string (str): the string to format.
+    - colours (list of str): the list of ANSI codes to be used for formatting.
+    
+    Returns:
+    - (str) the formatted string"""
+    
     builder = ""
 
     for colour in colours:

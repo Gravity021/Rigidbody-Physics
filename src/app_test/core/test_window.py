@@ -3,7 +3,11 @@ from unittest import TestCase
 from app_main.core.window import *
 
 class WindowTests(TestCase):
+    """Test the Window class."""
+
     def test_init(self):
+        """Test the Window constructor."""
+
         Debug._messages = []
 
         pygame.init()
@@ -63,9 +67,13 @@ class WindowTests(TestCase):
         del window
     
     def test_validate_colour(self):
+        """Test the Window 'validate_colour' static method."""
+
         self.assertEqual(Window.validate_colour([-50, 100, 400]), [0, 100, 255], "validate_colour - all negative")
 
     def test_clear(self):
+        """Test the Window 'clear' method."""
+
         Debug._messages = []
 
         pygame.init()

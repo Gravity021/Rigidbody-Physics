@@ -4,7 +4,11 @@ from unittest import TestCase
 from app_main.core.event_manager import *
 
 class EventManagerTests(TestCase):
+    """Test the EventManager class."""
+    
     def test_init(self):
+        """Test the EventManager constructor."""
+        
         event_manager = EventManager()
 
         self.assertEqual(event_manager._event_map, {pygame.KEYDOWN: {}, pygame.KEYUP: {}}, "'_event_map' init")
@@ -16,6 +20,8 @@ class EventManagerTests(TestCase):
         self.assertEqual(event_manager._should_close, False, "'_should_close' init")
 
     def test_handle_events(self):
+        """Test the EventManager 'handle_events' method."""
+
         Debug._messages = []
 
         event_manager = EventManager()
@@ -84,9 +90,12 @@ class EventManagerTests(TestCase):
     
     @unittest.skip
     def runnable(self):
+        """An arbitrary method used in some tests"""
         print("Hello, World!")
 
     def test_register_action(self):
+        """Test the EventManager 'register_action' method."""
+
         event_manager = EventManager()
 
         event_manager.register_action(pygame.KEYDOWN, pygame.K_ESCAPE, self.runnable)

@@ -6,6 +6,8 @@ import traceback
 from .terminal_formatting import *
 
 class Debug:
+    """A static class for logging messages."""
+
     _init_time = time.time()
 
     _messages = []
@@ -20,6 +22,7 @@ class Debug:
     }
     
     def log(message):
+        """Log a message to the debug log with the lowest priority."""
         called_from = traceback.extract_stack()[-2]
         Debug._messages.append({
             "time": time.time() - Debug._init_time,
@@ -31,6 +34,7 @@ class Debug:
         })
 
     def log_info(message):
+        """Logs an information message to the debug log"""
         called_from = traceback.extract_stack()[-2]
         Debug._messages.append({
             "time": time.time() - Debug._init_time,
@@ -41,6 +45,7 @@ class Debug:
         })
 
     def log_warning(message):
+        """Log a warnign message to the debug log."""
         called_from = traceback.extract_stack()[-2]
         Debug._messages.append({
             "time": time.time() - Debug._init_time,
@@ -51,6 +56,7 @@ class Debug:
         })
     
     def log_error(message):
+        """Log an error message to the debug log."""
         called_from = traceback.extract_stack()[-2]
         Debug._messages.append({
             "time": time.time() - Debug._init_time,
@@ -61,6 +67,7 @@ class Debug:
         })
     
     def print_logs():
+        """Print in plaintext the contents of the log."""
         output_string = "\n-------- DEBUG LOG --------\n"
         
         maxLogLevelLength = 0
@@ -83,6 +90,7 @@ class Debug:
         print(output_string)
     
     def print_pretty_logs():
+        """Print (formatted plaintext) the contents of the log."""
         output_string = "\n-------- " + term_format("DEBUG LOG", ANSI_BRIGHT_BLUE) + " --------\n"
         
         maxLogLevelLength = 0
