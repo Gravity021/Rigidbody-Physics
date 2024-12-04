@@ -31,6 +31,7 @@ class EventManagerTests(TestCase):
         event_manager._event_map[pygame.KEYDOWN] = {}
         event_manager._event_map[pygame.KEYDOWN][pygame.K_SPACE] = [lambda: Debug.log("Space key pressed down!")]
 
+        # Test Keydown with no listener
         pygame.event.post(pygame.event.Event(
             pygame.KEYDOWN,
             {"key": 27}
@@ -42,6 +43,8 @@ class EventManagerTests(TestCase):
         self.assertTrue(log_found, "keydown handled")
         
         Debug._messages = []
+
+        # Test Keyup with no listener
         pygame.event.post(pygame.event.Event(
             pygame.KEYUP,
             {"key": 27}
@@ -53,6 +56,8 @@ class EventManagerTests(TestCase):
         self.assertTrue(log_found, "keyup handled")
         
         Debug._messages = []
+        
+        # Test Mousebuttondown
         pygame.event.post(pygame.event.Event(
             pygame.MOUSEBUTTONDOWN,
             {"button": 1}
@@ -62,6 +67,8 @@ class EventManagerTests(TestCase):
         self.assertTrue(event_manager._mouse_buttons[0], "mousebuttondown handled")
         
         Debug._messages = []
+
+        # Test Mousebuttonup
         pygame.event.post(pygame.event.Event(
             pygame.MOUSEBUTTONUP,
             {"button": 1}
@@ -71,12 +78,16 @@ class EventManagerTests(TestCase):
         self.assertFalse(event_manager._mouse_buttons[0], "mousebuttonup handled")
         
         Debug._messages = []
+
+        # Test quit event
         pygame.event.post(pygame.event.Event(pygame.QUIT))
         event_manager.handle_events()
         
         self.assertTrue(event_manager._should_close)
 
         Debug._messages = []
+
+        # Test Keydown with listener
         pygame.event.post(pygame.event.Event(
             pygame.KEYDOWN,
             {"key": 32}

@@ -12,6 +12,8 @@ class WindowTests(TestCase):
 
         pygame.init()
         
+        # Test case 1
+        # All Valid
         window = Window(1024, 768, "Rigidbody Physics", False, [32, 32, 32])
 
         self.assertEqual(window.width, 1024, "width")
@@ -29,6 +31,8 @@ class WindowTests(TestCase):
 
         del window
 
+        # Test case 2
+        # Test Resizing and invalid clear colour
         window = Window(1500, 1000, "Test Window Name", True, [-1, -1, -1])
 
         self.assertEqual(window.width, 1500, "width")
@@ -49,6 +53,8 @@ class WindowTests(TestCase):
 
         del window
 
+        # Test case 3
+        # Test mixed clear colours, v-sync disabled
         window = Window(1500, 1000, "Test Window Name", True, [100, -500, 500], False)
 
         self.assertEqual(window.width, 1500, "width")
