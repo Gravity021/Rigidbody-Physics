@@ -10,12 +10,15 @@ class Time:
     Also supports scaling the delta time by some factor."""
 
     dt: float = 0
+    """Time between frames in seconds, multiplied by the timescale."""
     true_dt: float = 0
+    """Time between frames in seconds."""
     
     _last_time: float = time.time()
     
     timescale: float = 1
-    
+    """The factor to scale the true delta time to get the scaled delta time, dt."""
+
     _delayed_funcs: list[tuple[float, ]] = []
     
     def __init__(self, timescale = 1) -> None:
