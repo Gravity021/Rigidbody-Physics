@@ -19,7 +19,7 @@ class EventManager:
         # self._last_mouse_buttons = [False, False, False, False, False]
         self._should_close = False
 
-    def handle_events(self):
+    def handle_events(self, *handlers: list[Callable[[pygame.Event], None]]):
         # self._last_mouse_buttons = self._mouse_buttons.copy()
         
         # self._last_mouse_pos = deepcopy(self._mouse_pos)
@@ -33,49 +33,42 @@ class EventManager:
             if event.type == pygame.QUIT:
                 self._should_close = True
             
-            # If the event is a key event, then try and call the appropriate actions
-            elif event.type == pygame.KEYDOWN:
-                try: 
-                    for action in self._event_map[pygame.KEYDOWN][event.key]: action()
-                except KeyError as err: Debug.log_warning(f"KEYDOWN event for key {event.key} with no listener!")
-            
-            elif event.type == pygame.KEYUP:
-                try:
-                    for action in self._event_map[pygame.KEYUP][event.key]: action()
-                except KeyError as err: Debug.log_warning(f"KEYUP event for key {event.key} with no listener!")
-
             # If the event is a mouse button event, set the appropriate button to the appropriate state
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self._mouse_buttons[event.button - 1] = True
             
             elif event.type == pygame.MOUSEBUTTONUP:
                 self._mouse_buttons[event.button - 1] = False
-        
-            # TODO: Add support for handling any type of event here
-            # TODO: Add support for passing through the Event instance to the handler
+
+            elif (event.type in self._event_map.keys()):
+                if len(self._event_map[event.type]) == 0:
+                    Debug.log_warning(f"Unhandled event of type {pygame.event.event_name(event.type)}")
+                    print(f"Unhandled event of type {pygame.event.event_name(event.type)}")
+                else: 
+                    for action in self._event_map[event.type]: action(event)
+            
+            for handler in handlers:
+                handler(event)
     
     def reset_event_map(self) -> None:
         """Set the event map to a default."""
 
         self._event_map = {
-            pygame.KEYDOWN: {},
-            pygame.KEYUP: {}
+            pygame.KEYDOWN: [],
+            pygame.KEYUP: []
         }
     
-    def register_action(self, event_type: int, event_action: int, action: Callable) -> None:
+    def register_action(self, event_type: int, action: Callable[[pygame.Event], None]) -> None:
         """Add an action to the event map.
         
         Parameters:
         - event_type (int): The ID corresponding to the type of event to listen to.
-        - event_action (int): The ID corresponding to the type of data we want to perform an action on.
-        - action (Callable): The method to perform when the required event is received."""
+        - action (Callable): The method to perform when the required event is received. Must accept a 'pygame.Event'."""
 
         if not event_type in self._event_map:
-            self._event_map[event_type] = {}
-        if not event_action in self._event_map[event_type]:
-            self._event_map[event_type][event_action] = []
+            self._event_map[event_type] = []
 
-        self._event_map[event_type][event_action].append(action)
+        self._event_map[event_type].append(action)
 
     @property
     def mouse_pos(self) -> tuple[int, int]:
