@@ -9,11 +9,7 @@ from ..util.debug import Debug
 class EventManager:
     """The class responsible for handling events collected by pygame."""
 
-    _instance = None
-
-    def __init__(self):
-        if EventManager._instance is not None: return EventManager._instance
-
+    def __init__(self) -> None:
         self._event_map = {}
         self.reset_event_map()
 
@@ -22,14 +18,6 @@ class EventManager:
         self._mouse_buttons = [False, False, False, False, False]
         # self._last_mouse_buttons = [False, False, False, False, False]
         self._should_close = False
-
-        EventManager._instance = self
-
-    def get_instance():
-        if (EventManager._instance == None):
-            EventManager()
-
-        return EventManager._instance
 
     def handle_events(self, *handlers: list[Callable[[pygame.Event], None]]):
         # self._last_mouse_buttons = self._mouse_buttons.copy()
@@ -81,15 +69,6 @@ class EventManager:
             self._event_map[event_type] = []
 
         self._event_map[event_type].append(action)
-
-    def s_register_action(event_type: int, action: Callable[[pygame.Event], None]) -> None:
-        """Add an action to the event map.
-        
-        Parameters:
-        - event_type (int): The ID corresponding to the type of event to listen to.
-        - action (Callable): The method to perform when the required event is received. Must accept a 'pygame.Event'."""
-
-        EventManager.get_instance().register_action(event_type, action)
 
     @property
     def mouse_pos(self) -> tuple[int, int]:
