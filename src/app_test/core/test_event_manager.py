@@ -8,10 +8,11 @@ class EventManagerTests(TestCase):
     
     def test_init(self):
         """Test the EventManager constructor."""
-        
+
+        pygame.init()
         event_manager = EventManager()
 
-        self.assertEqual(event_manager._event_map, {pygame.KEYDOWN: {}, pygame.KEYUP: {}}, "'_event_map' init")
+        self.assertEqual(event_manager._event_map, {pygame.KEYDOWN: [], pygame.KEYUP: []}, "'_event_map' init")
 
         self.assertEqual(event_manager._mouse_pos, (-1, -1), "'_mouse_pos' init")
 
@@ -19,17 +20,18 @@ class EventManagerTests(TestCase):
 
         self.assertEqual(event_manager._should_close, False, "'_should_close' init")
 
+    @unittest.skip
+    def handle_space(self, event: pygame.Event):
+        if event.key == pygame.K_SPACE: Debug.log("Space key pressed!")
+
     def test_handle_events(self):
         """Test the EventManager 'handle_events' method."""
 
         Debug._messages = []
 
-        event_manager = EventManager()
-
         pygame.init()
 
-        event_manager._event_map[pygame.KEYDOWN] = {}
-        event_manager._event_map[pygame.KEYDOWN][pygame.K_SPACE] = [lambda: Debug.log("Space key pressed down!")]
+        event_manager = EventManager()
 
         # Test Keydown with no listener
         pygame.event.post(pygame.event.Event(
@@ -39,7 +41,7 @@ class EventManagerTests(TestCase):
         event_manager.handle_events()
         
         log_found = False
-        for message in Debug._messages: log_found |= message["message"] == "KEYDOWN event for key 27 with no listener!"
+        for message in Debug._messages: log_found |= message["message"] == "Unhandled event of type KeyDown"
         self.assertTrue(log_found, "keydown handled")
         
         Debug._messages = []
@@ -52,7 +54,7 @@ class EventManagerTests(TestCase):
         event_manager.handle_events()
         
         log_found = False
-        for message in Debug._messages: log_found |= message["message"] == "KEYUP event for key 27 with no listener!"
+        for message in Debug._messages: log_found |= message["message"] == "Unhandled event of type KeyUp"
         self.assertTrue(log_found, "keyup handled")
         
         Debug._messages = []
@@ -87,6 +89,7 @@ class EventManagerTests(TestCase):
 
         Debug._messages = []
 
+        event_manager._event_map[pygame.KEYDOWN].append(self.handle_space)
         # Test Keydown with listener
         pygame.event.post(pygame.event.Event(
             pygame.KEYDOWN,
@@ -109,6 +112,6 @@ class EventManagerTests(TestCase):
 
         event_manager = EventManager()
 
-        event_manager.register_action(pygame.KEYDOWN, pygame.K_ESCAPE, self.runnable)
+        event_manager.register_action(pygame.KEYDOWN, self.runnable)
 
-        self.assertEqual(event_manager._event_map, {768: {27: [self.runnable]}, 769: {}}, "event map")
+        self.assertEqual(event_manager._event_map, {768: [self.runnable], 769: []}, "event map")
