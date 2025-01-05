@@ -1,7 +1,6 @@
 # (c) Isaac Godman
 
-import time
-import pygame, math
+import pygame
 
 from ..util.debug import Debug
 
