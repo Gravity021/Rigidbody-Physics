@@ -2,7 +2,6 @@
 
 from typing import Callable
 import pygame
-from copy import deepcopy
 
 from ..util.debug import Debug
 
