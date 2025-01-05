@@ -1,7 +1,6 @@
 # (c) Isaac Godman 2024
 
 import pygame, sys
-import pygame_gui
 
 from .window import Window
 from .event_manager import EventManager
@@ -9,11 +8,14 @@ from .event_manager import EventManager
 from ..util.debug import *
 from ..util.time import *
 
+import atexit
 
 class Application:
     """The main application class."""
 
     def __init__(self):
+        atexit.register(self.on_close)
+
         # Log information about the application
         Debug.log_info("Starting Application: Rigidbody Physics App")
         Debug.log_info(f"Python version: Python {sys.version}")
@@ -26,10 +28,9 @@ class Application:
         # Begin initialising variables
         self.running: bool = True
 
-        self.window: Window = Window(int(1024 * 0.75), int(768 * 0.75), "Rigidbody Physics", True, [32, 32, 32])
+        self.window: Window = Window(1024, 768, "Rigidbody Physics", True, [32, 32, 32])
         self.event_manager: EventManager = EventManager()
 
-        Time.add_delayed_func(2, lambda x: print(x), "yes")
 
     def update(self):
         """The method to update the application."""
@@ -62,7 +63,7 @@ class Application:
             self.update()
             self.render()
     
-    def __del__(self):
+    def on_close(self):
         """The destructor.
         
         We just need to tidy up after ourselves before we can finish."""
