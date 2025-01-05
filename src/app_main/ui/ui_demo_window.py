@@ -26,6 +26,8 @@ class DemoWindow(pygame_gui.elements.UIWindow):
             anchors = {'left': 'left', 'right': 'right'},
             expand_on_option_click = False
         )
+
+        self.ui_manager.register_event_fn(pygame_gui.UI_BUTTON_PRESSED, lambda event: print("yay", event))
     
     def on_close_window_button_pressed(self):
         super().hide()
