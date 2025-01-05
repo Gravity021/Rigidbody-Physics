@@ -1,5 +1,4 @@
 from unittest import TestCase
-import time
 
 from app_main.core.window import *
 

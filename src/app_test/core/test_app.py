@@ -18,5 +18,7 @@ class ApplicationTests(TestCase):
         self.assertIsNotNone(app.window, "window")
         self.assertIsNotNone(app.event_manager, "event_manager")
 
+        atexit.unregister(app.on_close)
+
         del app
         pygame.quit()
