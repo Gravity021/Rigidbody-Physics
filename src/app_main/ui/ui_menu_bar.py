@@ -48,5 +48,9 @@ class MenuBar(pygame_gui.elements.UIPanel):
         if event.ui_element == self.windows_dropdown.current_state.selected_option_button:
             if self.windows_dropdown.current_state.selected_option_button.text == "Demo Window":
                 self.ui_manager.test_window.show()
-            # elif self.windows_dropdown.current_state.selected_option_button.text == "Settings":
-            #     self.ui_manager.settings_window.show()
+            elif self.windows_dropdown.current_state.selected_option_button.text == "Settings":
+                self.ui_manager.settings_window.show()
+            elif self.windows_dropdown.current_state.selected_option_button.text == "Selected Object Properties":
+                self.ui_manager.selected_object_window.show()
+            elif self.windows_dropdown.current_state.selected_option_button.text == "Add Object":
+                self.ui_manager.add_object_window.show()
