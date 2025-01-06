@@ -1,6 +1,6 @@
 # (c) Isaac Godman 2024
 
-import pygame, sys
+import pygame, sys, os
 
 from .window import Window
 from .event_manager import EventManager
@@ -24,6 +24,10 @@ class Application:
         Debug.log_info(f"Pygame version: pygame{"-ce" if pygame.IS_CE else ""} {pygame.version.ver}")
         Debug.log_info(f"SDL version: {pygame.version.SDL.major}.{pygame.version.SDL.minor}.{pygame.version.SDL.patch}")
 
+        # Ensure that the window size is correct for scaled displays on windows
+        # TODO: Make this work on other platforms?
+        os.environ["SDL_WINDOWS_DPI_AWARENESS"] = "permonitorv2"
+
         # Ensure pygame is initialized
         pygame.init()
         
@@ -46,8 +50,6 @@ class Application:
         self.ui_manager.update(Time.true_dt)
 
         Time.update()
-        # print(Time.dt)
-        # print(1 / Time.dt)
         self.ui_manager.menu_bar.fps_label.set_text(f"FPS: {{:.2f}}".format(1 / Time.true_dt))
 
     def render(self):
