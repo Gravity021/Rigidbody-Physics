@@ -1,8 +1,6 @@
 import pygame
 import pygame_gui
 
-from ..core.event_manager import EventManager
-
 class SelectedObjectWindow(pygame_gui.elements.UIWindow):
     def __init__(self, ui_manager: pygame_gui.UIManager):
         super().__init__(pygame.Rect(750, 50, 220, 400), ui_manager, "Selected Object", resizable=True)
