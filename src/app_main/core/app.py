@@ -5,7 +5,7 @@ import pygame, sys, os
 from .window import Window
 from .event_manager import EventManager
 
-from ..ui.ui_manager import UIManager
+from ..ui.ui_manager import *
 
 from ..util.debug import *
 from ..util.time import *
@@ -38,19 +38,21 @@ class Application:
         self.event_manager: EventManager = EventManager()
 
         self.ui_manager = UIManager(self.window.size, self.event_manager.register_action)
+        self.menu_bar_manager = MenuBarUIManager(self.window.size, self.event_manager.register_action)
 
     def update(self):
         """The method to update the application."""
 
-        self.event_manager.handle_events(self.ui_manager.process_events)
+        self.event_manager.handle_events(self.menu_bar_manager.process_events, self.ui_manager.process_events)
         self.running = not self.event_manager.should_close
 
         # do logic
 
         self.ui_manager.update(Time.true_dt)
+        self.menu_bar_manager.update(Time.true_dt)
 
         Time.update()
-        self.ui_manager.menu_bar.fps_label.set_text(f"FPS: {{:.2f}}".format(1 / Time.true_dt))
+        self.menu_bar_manager.menu_bar.fps_label.set_text(f"FPS: {{:.2f}}".format(1 / Time.true_dt))
 
     def render(self):
         """The method to render the application to the window."""
@@ -60,6 +62,7 @@ class Application:
         # rendering code goes here
 
         self.ui_manager.draw_ui(self.window.screen)
+        self.menu_bar_manager.draw_ui(self.window.screen)
 
         self.window.update()
 
