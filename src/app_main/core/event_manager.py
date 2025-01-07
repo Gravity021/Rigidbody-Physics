@@ -18,7 +18,7 @@ class EventManager:
         # self._last_mouse_buttons = [False, False, False, False, False]
         self._should_close = False
 
-    def handle_events(self, *handlers: list[Callable[[pygame.Event], None]]):
+    def handle_events(self, *handlers: list[Callable[[pygame.Event], bool]]):
         # self._last_mouse_buttons = self._mouse_buttons.copy()
         
         # self._last_mouse_pos = deepcopy(self._mouse_pos)
@@ -46,8 +46,10 @@ class EventManager:
                 else: 
                     for action in self._event_map[event.type]: action(event)
             
+            handled = False  # Assume no event is handled by default
             for handler in handlers:
-                handler(event)
+                handled = handler(event)
+                if handled: break
     
     def reset_event_map(self) -> None:
         """Set the event map to a default."""
