@@ -6,14 +6,14 @@ class MenuBar(pygame_gui.elements.UIPanel):
     def __init__(self, ui_manager: pygame_gui.UIManager, window_width: int):
         super().__init__(
             (0, 0, window_width, 30),
-            manager = ui_manager, 
+            manager = ui_manager,
             margins = {"left": 0, "right": 0, "top": 0, "bottom": 0}, 
             anchors = {'left': 'left', 'right': 'right'}
         )
 
-        panel_dimensions = self.panel_container.get_rect()
-        panel_dimensions.height += 100
-        self.panel_container.set_dimensions((panel_dimensions.width, panel_dimensions.height))
+        container_dimensions = self.panel_container.get_rect()
+        container_dimensions.height += 100
+        self.panel_container.set_dimensions((container_dimensions.width, container_dimensions.height))
 
         self.file_button = pygame_gui.elements.UIButton(
             pygame.Rect(2, 2, 60, 26),
@@ -22,7 +22,7 @@ class MenuBar(pygame_gui.elements.UIPanel):
             command = lambda : print("File"),
             parent_element = self,
             container = self,
-            anchors = {"top": "top", "bottom": "bottom"}
+            anchors = {"top": "top"}
         )
         self.windows_dropdown = pygame_gui.elements.UIDropDownMenu(
             ["Selected Object", "Add Object", "Settings", "Demo Window"],
@@ -31,7 +31,7 @@ class MenuBar(pygame_gui.elements.UIPanel):
             ui_manager,
             container = self,
             parent_element = self,
-            anchors = {"left_target": self.file_button, "top": "top", "bottom": "bottom"},
+            anchors = {"left_target": self.file_button, "top": "top"},
             expand_on_option_click = False
         )
         self.fps_label = pygame_gui.elements.UILabel(
@@ -40,10 +40,19 @@ class MenuBar(pygame_gui.elements.UIPanel):
             ui_manager,
             container = self,
             parent_element = self,
-            anchors = {"right": "right", "top": "top", "bottom": "bottom"}
+            anchors = {"right": "right", "top": "top"}
         )
         
         self.ui_manager.register_event_fn(pygame_gui.UI_BUTTON_PRESSED, self.handle_dropdown)
+    
+    def set_dimensions(self, dimensions, clamp_to_container: bool = False):
+        super().set_dimensions(dimensions, clamp_to_container)
+        container_dimensions = self.panel_container.get_rect()
+        container_dimensions.height += 100
+        self.panel_container.set_dimensions((container_dimensions.width, container_dimensions.height))
+
+        print(self.get_abs_rect())
+        print(self.panel_container.get_rect())
     
     def handle_dropdown(self, event: pygame.Event):
         if event.ui_element == self.windows_dropdown.current_state.selected_option_button:
