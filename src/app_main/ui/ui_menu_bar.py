@@ -51,9 +51,6 @@ class MenuBar(pygame_gui.elements.UIPanel):
         container_dimensions.height += 100
         self.panel_container.set_dimensions((container_dimensions.width, container_dimensions.height))
 
-        print(self.get_abs_rect())
-        print(self.panel_container.get_rect())
-    
     def handle_dropdown(self, event: pygame.Event):
         if event.ui_element == self.windows_dropdown.current_state.selected_option_button:
             if self.windows_dropdown.current_state.selected_option_button.text == "Demo Window":
