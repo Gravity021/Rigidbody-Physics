@@ -3,7 +3,7 @@ import pygame_gui
 
 class DemoWindow(pygame_gui.elements.UIWindow):
     def __init__(self, ui_manager: pygame_gui.UIManager):
-        super().__init__(pygame.Rect(20, 50, 220, 400), ui_manager, "Demo Window", resizable=True)
+        super().__init__(pygame.Rect(20, 50, 220, 400), ui_manager, "Demo Window", resizable=True, visible=0)
 
         self.demo_button = pygame_gui.elements.UIButton(
             pygame.Rect(10, 10, 200, 50), 
