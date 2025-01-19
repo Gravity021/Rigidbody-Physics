@@ -3,6 +3,10 @@ import pygame_gui
 from pygame_gui.core.utility import get_default_manager
 
 class MenuBar(pygame_gui.elements.UIPanel):
+    """Menu bar for the application.
+    
+    Stores and is responsible for the menu bar and its contents."""
+
     def __init__(self, ui_manager: pygame_gui.UIManager, window_width: int):
         super().__init__(
             (0, 0, window_width, 30),
@@ -11,10 +15,12 @@ class MenuBar(pygame_gui.elements.UIPanel):
             anchors = {'left': 'left', 'right': 'right'}
         )
 
+        # Extend the render-able area by 100px vertically to accommodate the dropdown menu
         container_dimensions = self.panel_container.get_rect()
         container_dimensions.height += 100
         self.panel_container.set_dimensions((container_dimensions.width, container_dimensions.height))
 
+        # Create the menu bar elements
         self.file_button = pygame_gui.elements.UIButton(
             pygame.Rect(2, 2, 60, 26),
             "File",
@@ -43,15 +49,22 @@ class MenuBar(pygame_gui.elements.UIPanel):
             anchors = {"right": "right", "top": "top"}
         )
         
+        # Ensure that the dropdown button opens the correct window on pressed.
         self.ui_manager.register_event_fn(pygame_gui.UI_BUTTON_PRESSED, self.handle_dropdown)
     
     def set_dimensions(self, dimensions, clamp_to_container: bool = False):
+        """Override method to resize the menu bar.
+        
+        Extend the render-able area by 100px vertically to accommodate the dropdown menu."""
+
         super().set_dimensions(dimensions, clamp_to_container)
         container_dimensions = self.panel_container.get_rect()
         container_dimensions.height += 100
         self.panel_container.set_dimensions((container_dimensions.width, container_dimensions.height))
 
     def handle_dropdown(self, event: pygame.Event):
+        """Open the required window when the dropdown button is pressed."""
+
         if event.ui_element == self.windows_dropdown.current_state.selected_option_button:
             if self.windows_dropdown.current_state.selected_option_button.text == "Demo Window":
                 get_default_manager().test_window.show()
