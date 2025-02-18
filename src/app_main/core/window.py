@@ -75,12 +75,13 @@ class Window:
         """Returns the center of the window."""
         return (self.width // 2, self.height // 2)
     
-    def validate_colour(colour) -> list[int, int, int]:
+    def validate_colour(colour: list[int]) -> list[int]:
         """Ensure that a colour specified is valid for use in pygame.
         
         Clamps each component to [0 - 255] inclusive."""
-        return [
-            max(0, min(colour[0], 255)),
-            max(0, min(colour[1], 255)),
-            max(0, min(colour[2], 255))
-        ]
+
+        out_list = []
+        for i in range(len(colour)):
+            out_list.append(max(0, min(colour[i], 255)))
+        
+        return out_list
