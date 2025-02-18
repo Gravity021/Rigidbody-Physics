@@ -39,7 +39,7 @@ class EventManager:
             elif event.type == pygame.MOUSEBUTTONUP:
                 self._mouse_buttons[event.button - 1] = False
 
-            elif (event.type in self._event_map.keys()):
+            if (event.type in self._event_map.keys()):
                 if len(self._event_map[event.type]) == 0:
                     Debug.log_warning(f"Unhandled event of type {pygame.event.event_name(event.type)}")
                     print(f"Unhandled event of type {pygame.event.event_name(event.type)}")
