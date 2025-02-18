@@ -93,4 +93,31 @@ class WindowTests(TestCase):
         self.assertEqual(window.screen.get_at((50, 50)), pygame.Color(255, 0, 0))
 
         del window
-        
+    
+    def test_update(self):
+        """Test the Window 'update' method."""
+
+        Debug._messages = []
+
+        window = Window(100, 100, "Test Window", False, [255, 0, 0])
+
+        window.clear()
+
+        self.assertEqual(window.screen.get_at((50, 50)), pygame.Color(255, 0, 0))
+
+        pygame.draw.rect(window.screen, [0, 255, 0], [25, 25, 50, 50])
+
+        window.update()
+
+        self.assertEqual(window.screen.get_at((20, 20)), pygame.Color(255, 0, 0))
+        self.assertEqual(window.screen.get_at((20, 80)), pygame.Color(255, 0, 0))
+        self.assertEqual(window.screen.get_at((80, 20)), pygame.Color(255, 0, 0))
+        self.assertEqual(window.screen.get_at((80, 80)), pygame.Color(255, 0, 0))
+
+        self.assertEqual(window.screen.get_at((50, 50)), pygame.Color(0, 255, 0))
+        self.assertEqual(window.screen.get_at((25, 25)), pygame.Color(0, 255, 0))
+        self.assertEqual(window.screen.get_at((25, 74)), pygame.Color(0, 255, 0))
+        self.assertEqual(window.screen.get_at((74, 25)), pygame.Color(0, 255, 0))
+        self.assertEqual(window.screen.get_at((74, 74)), pygame.Color(0, 255, 0))
+
+        del window
