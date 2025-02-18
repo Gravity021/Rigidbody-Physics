@@ -14,7 +14,7 @@ class Time:
     true_dt: float = 0
     """Time between frames in seconds."""
     
-    _last_time: float = time.time()
+    _last_time: float = 0
     
     timescale: float = 1
     """The factor to scale the true delta time to get the scaled delta time, dt."""
@@ -23,6 +23,9 @@ class Time:
     
     def __init__(self, timescale = 1) -> None:
         timescale = timescale
+    
+    def start_timer():
+        Time._last_time = time.time()
     
     def update():
         """Update the Time class.
