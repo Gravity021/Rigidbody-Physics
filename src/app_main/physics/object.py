@@ -24,21 +24,21 @@ class Object:
                  colour: list[int] = [255, 255, 255, 255]) -> None:
         
         # Initialse private variables
-        self._object_type = Object.ObjectType.NONE
+        self._object_type: Object.ObjectType = Object.ObjectType.NONE
         
-        self._dimensions = None
+        self._dimensions: Vector2 = None
 
-        self._mass = None
-        self._colour = None
+        self._mass: float = None
+        self._colour: list[int] = None
 
         # Pass through parameters through validation processes      
         self.object_type = object_type
 
-        self.position = position
-        self.velocity = Vector2()
-        self.force = Vector2()
+        self.position: Vector2 = position
+        self.velocity: Vector2 = Vector2()
+        self.force: Vector2 = Vector2()
 
-        self.rotation = rotation
+        self.rotation: float = rotation
 
         self.mass = mass
 
