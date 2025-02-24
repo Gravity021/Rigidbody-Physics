@@ -2,8 +2,6 @@ from .object import Object
 
 from ..maths.Vector2 import Vector2
 
-from ..util.time import Time
-
 global_gravity = Vector2(0, -9.81)
 """The acceleration due to gravity.
 
@@ -12,7 +10,7 @@ This affects all objects in the scene that are dynamic."""
 world_to_screen_scale = 16
 """The scale factor to convert between world space and screen space."""
 
-def step(objects: list[Object]):
+def step(objects: list[Object], delta_time: float):
     """Perform a step of the physics simulation.
 
     Updates the positions and velocities of the objects based on their forces and mass.
@@ -24,13 +22,17 @@ def step(objects: list[Object]):
         object.force += global_gravity * object.mass
 
         # Update velocity and position based on force and mass, according to Newton's laws of motion (using Verlet Integration).
-        object.position += object.velocity * Time.dt + (object.force / object.mass) * 0.5 * (Time.dt ** 2)
-        object.velocity += object.force / object.mass * Time.dt
+        object.position += object.velocity * delta_time + (object.force / object.mass) * 0.5 * (delta_time ** 2)
+        object.velocity += object.force / object.mass * delta_time
 
         # Remove the global gravity force from the object.
         # This ensures that this is not affected by other forces.
         object.force -= global_gravity * object.mass
     
+    # for object_a in objects: 
+    #     for object_b in objects:
+    #         pass
+
 def world_to_screen_space(length: float) -> float:
     """Convert a length from world space to screen space."""
 
