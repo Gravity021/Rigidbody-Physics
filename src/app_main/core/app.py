@@ -5,6 +5,8 @@ import pygame, sys, os
 from .window import Window
 from .event_manager import EventManager
 
+from ..physics.scene import Scene
+
 from ..ui.ui_manager import *
 
 from ..util.debug import *
@@ -40,6 +42,8 @@ class Application:
         self.ui_manager = UIManager(self.window.size, self.event_manager.register_action)
         self.menu_bar_manager = MenuBarUIManager(self.window.size, self.event_manager.register_action)
 
+        self.scene = Scene()
+        self.menu_bar_manager.menu_bar.set_scene_ref(self.scene)
     def update(self):
         """The method to update the application."""
 
@@ -47,6 +51,7 @@ class Application:
         self.running = not self.event_manager.should_close
 
         # do logic
+        self.scene.update()
 
         self.ui_manager.update(Time.true_dt)
         self.menu_bar_manager.update(Time.true_dt)
@@ -60,6 +65,7 @@ class Application:
         self.window.clear()
 
         # rendering code goes here
+        self.scene.render(self.window.screen)
 
         self.ui_manager.draw_ui(self.window.screen)
         self.menu_bar_manager.draw_ui(self.window.screen)
@@ -70,6 +76,8 @@ class Application:
         """The method to run the application.
         
         Repeatedly calls the 'update' and 'render' methods until the application closes."""
+
+        Time.start_timer()
 
         while self.running:
             self.update()
