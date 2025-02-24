@@ -73,6 +73,11 @@ class Vector2:
     
     def __iter__(self):
         return iter([self.x, self.y])
+
+    def __eq__(self, value):
+        if isinstance(value, Vector2):
+            return self.x == value.x and self.y == value.y
+        return False
     
     @property
     def list(self):
