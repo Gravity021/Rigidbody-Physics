@@ -82,3 +82,6 @@ class Scene:
     @property
     def state(self) -> SceneState:
         return self._state
+    
+    def set_step_interval(self, step_interval: float):
+        self.step_interval = step_interval
