@@ -59,6 +59,9 @@ class MenuBarUIManager(pygame_gui.UIManager):
         self.register_event_fn(pygame.KEYDOWN, lambda event: self.toggle_visual_debug_mode(event))                  # Toggle debug mode on F1 press
 
         self.menu_bar = MenuBar(self, window_size[0])
+
+        self.register_event_fn(pygame_gui.UI_FILE_DIALOG_PATH_PICKED, self.menu_bar._save_simulation)
+        self.register_event_fn(pygame_gui.UI_FILE_DIALOG_PATH_PICKED, self.menu_bar._load_simulation)
     
     def toggle_visual_debug_mode(self, event) -> None:
         """Toggles the visual debug mode."""

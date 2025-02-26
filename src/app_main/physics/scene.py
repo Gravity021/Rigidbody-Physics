@@ -25,7 +25,9 @@ class Scene:
     def __init__(self):
         self._state: Scene.SceneState = Scene.SceneState.EDIT
 
-        self.step_interval = 0.5
+        self.file_path: str = None
+
+        self.step_interval: float = 0.5
 
         self.objects: list[Object] = []
         self._sim_objects: list[Object] = None
