@@ -141,6 +141,7 @@ class MenuBar(pygame_gui.elements.UIPanel):
                     return
         
             serializer.serialize(self._scene_ref.file_path, self._scene_ref.objects, self._scene_ref.step_interval)
+            return
 
         pygame_gui.windows.UIFileDialog(
             pygame.Rect(20, 20, 600, 400),
