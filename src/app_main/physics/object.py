@@ -20,6 +20,8 @@ class Object:
                  position: Vector2,
                  dimensions: Vector2,
                  mass: float,
+                 velocity: Vector2 = Vector2(),
+                 force: Vector2 = Vector2(),
                  rotation: float = 0,
                  colour: list[int] = [255, 255, 255, 255]) -> None:
         
@@ -35,8 +37,8 @@ class Object:
         self.object_type = object_type
 
         self.position: Vector2 = position
-        self.velocity: Vector2 = Vector2()
-        self.force: Vector2 = Vector2()
+        self.velocity: Vector2 = velocity
+        self.force: Vector2 = force
 
         self.rotation: float = rotation
 
