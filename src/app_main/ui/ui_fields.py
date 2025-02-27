@@ -117,7 +117,7 @@ def create_colour_field(ui_manager: pygame_gui.UIManager, window: pygame_gui.ele
 
     button =  pygame_gui.elements.UIButton(
         pygame.Rect(rect.x + 3 * rect.width // 4, rect.y, rect.width // 4, rect.height),
-        "Change",
+        "Pick",
         ui_manager,
         command=lambda : picker_window.show(),
         container=window,
