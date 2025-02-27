@@ -12,8 +12,7 @@ class SettingsWindow(pygame_gui.elements.UIWindow):
     """A window for adjusting settings of the application."""
 
     def __init__(self, ui_manager: pygame_gui.UIManager):
-        # super().__init__(pygame.Rect(270, 50, 220, 400), ui_manager, "Settings", resizable=True, visible=0)
-        super().__init__(pygame.Rect(270, 50, 220, 400), ui_manager, "Settings", resizable=True)
+        super().__init__(pygame.Rect(270, 50, 220, 400), ui_manager, "Settings", resizable=True, visible=0)
 
         self._time_since_update = 0
 
