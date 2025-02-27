@@ -11,8 +11,7 @@ class AddObjectWindow(pygame_gui.elements.UIWindow):
     """A window for adding new objects to the simulation."""
 
     def __init__(self, ui_manager: pygame_gui.UIManager):
-        # super().__init__(pygame.Rect(510, 50, 220, 400), ui_manager, "Add Object", resizable=True, visible=0)
-        super().__init__(pygame.Rect(510, 50, 220, 400), ui_manager, "Add Object", resizable=True)
+        super().__init__(pygame.Rect(510, 50, 220, 400), ui_manager, "Add Object", resizable=True, visible=0)
 
         self.scene_ref = None
 
