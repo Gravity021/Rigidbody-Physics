@@ -65,6 +65,14 @@ class Debug:
             "line_no": called_from.lineno,
             "message": message,
         })
+
+        print(Debug._message_format.format(
+                term_format(f"{{:<{len("Error")}}}".format("ERROR"),      Debug._colours["ERROR"]),
+                term_format(f"{{:<{len(".".join(called_from.filename.split("\\")[9:])[:-3] + "." + called_from.name)}}}".format(".".join(called_from.filename.split("\\")[9:])[:-3] + "." + called_from.name),    ANSI_GREEN),
+                term_format(f"{{:<{len(str(called_from.lineno))}}}".format(called_from.lineno),      ANSI_GREEN),
+                f"{{:.7f}}".format(time.time() - Debug._init_time),
+                message
+            ), end = "")
     
     def print_logs():
         """Print in plaintext the contents of the log."""
