@@ -36,6 +36,7 @@ class UIManager(pygame_gui.UIManager):
         self.selected_object_window = SelectedObjectWindow(self)
 
         self.register_event_fn(pygame_gui.UI_COLOUR_PICKER_COLOUR_PICKED, self.add_object_window.on_colour_change)
+        self.register_event_fn(pygame_gui.UI_COLOUR_PICKER_COLOUR_PICKED, self.selected_object_window.on_colour_change)
     
     def toggle_visual_debug_mode(self, event) -> None:
         """Toggles the visual debug mode."""

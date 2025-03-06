@@ -48,6 +48,7 @@ class Application:
         self.menu_bar_manager.menu_bar.set_scene_ref(self.scene)
         self.ui_manager.settings_window.set_step_interval = self.scene.set_step_interval
         self.ui_manager.add_object_window.scene_ref = self.scene
+        self.ui_manager.selected_object_window.scene_ref = self.scene
 
     def update(self):
         """The method to update the application."""
