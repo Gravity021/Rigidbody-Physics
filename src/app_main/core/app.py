@@ -43,6 +43,7 @@ class Application:
         self.menu_bar_manager = MenuBarUIManager(self.window.size, self.event_manager.register_action)
 
         self.scene = Scene()
+        self.event_manager.register_action(pygame.MOUSEBUTTONDOWN, self.scene.object_selected)
 
         self.menu_bar_manager.menu_bar.set_scene_ref(self.scene)
         self.ui_manager.settings_window.set_step_interval = self.scene.set_step_interval

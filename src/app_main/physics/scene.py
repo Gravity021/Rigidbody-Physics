@@ -32,6 +32,9 @@ class Scene:
         self.objects: list[Object] = []
         self._sim_objects: list[Object] = None
 
+        self.window_height: int = 0
+        self.selected_object = None
+
     def update(self):
         """Update the physics simulation scene."""
 
@@ -62,6 +65,8 @@ class Scene:
                 top_left = [pm.world_to_screen_space(object.position.x) - (pm.world_to_screen_space(object.dimensions.x) // 2),
                             surface.height - pm.world_to_screen_space(object.position.y) - (pm.world_to_screen_space(object.dimensions.y) // 2)]
                 pygame.draw.rect(surface, object.colour, top_left + pm.world_to_screen_space(object.dimensions).list)
+        
+        self.window_height = surface.height
 
     def change_state(self, new_state: SceneState):
         """Change the scene into a new state."""
@@ -69,6 +74,8 @@ class Scene:
         if new_state not in Scene.SceneState:
             Debug.log_error(f"Invalid SceneState of {new_state}")
             return
+
+        self.selected_object = None
         
         if new_state == Scene.SceneState.EDIT:
             self._sim_objects = None
@@ -85,3 +92,27 @@ class Scene:
     
     def set_step_interval(self, step_interval: float):
         self.step_interval = step_interval
+    
+    def object_selected(self, event):
+        if event.handled: return
+        if event.button != pygame.BUTTON_LEFT: return
+
+        self.selected_object = None
+
+        for object in self.objects:
+            pos = pm.screen_to_world_space(Vector2(event.pos[0], self.window_height - event.pos[1]))
+            if object.object_type == Object.ObjectType.CIRCLE:
+                if object.position.dist(pos) <= object.dimensions.x:
+                    self.selected_object = object
+                    break
+            elif object.object_type == Object.ObjectType.RECTANGLE:
+                left = object.position.x - object.dimensions.x / 2
+                right = object.position.x + object.dimensions.x / 2
+                top = object.position.y + object.dimensions.y / 2
+                bottom = object.position.y - object.dimensions.y / 2
+
+                if left <= pos.x <= right and bottom <= pos.y <= top:
+                    self.selected_object = object
+                    break
+        
+        print(self.selected_object)
