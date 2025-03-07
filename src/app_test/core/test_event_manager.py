@@ -12,7 +12,7 @@ class EventManagerTests(TestCase):
         pygame.init()
         event_manager = EventManager()
 
-        self.assertEqual(event_manager._event_map, {pygame.KEYDOWN: [], pygame.KEYUP: []}, "'_event_map' init")
+        self.assertEqual(event_manager._event_map, {}, "'_event_map' init")
 
         self.assertEqual(event_manager._mouse_pos, (-1, -1), "'_mouse_pos' init")
 
@@ -32,6 +32,8 @@ class EventManagerTests(TestCase):
         pygame.init()
 
         event_manager = EventManager()
+        event_manager.register_action(pygame.KEYDOWN, lambda event: Debug.log_warning("Unhandled event of type KeyDown"))
+        event_manager.register_action(pygame.KEYUP, lambda event: Debug.log_warning("Unhandled event of type KeyUp"))
 
         # Test Keydown with no listener
         pygame.event.post(pygame.event.Event(
@@ -114,4 +116,4 @@ class EventManagerTests(TestCase):
 
         event_manager.register_action(pygame.KEYDOWN, self.runnable)
 
-        self.assertEqual(event_manager._event_map, {768: [self.runnable], 769: []}, "event map")
+        self.assertEqual(event_manager._event_map, {768: [self.runnable]}, "event map")
