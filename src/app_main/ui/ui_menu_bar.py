@@ -106,10 +106,13 @@ class MenuBar(pygame_gui.elements.UIPanel):
         self.ui_manager.register_event_fn(pygame_gui.UI_BUTTON_PRESSED, self.handle_dropdown)
 
         self._scene_ref: Scene = None
+        self.update_settings = lambda step_interval: None
 
     def new_command(self):
         serializer.deserialize("default.simdata", self._scene_ref)
         self._scene_ref.file_path = None
+        self.update_settings(self._scene_ref.step_interval)
+        self._scene_ref.selected_object = None
     
     def load_command(self):
         pygame_gui.windows.UIFileDialog(
@@ -132,6 +135,8 @@ class MenuBar(pygame_gui.elements.UIPanel):
 
         serializer.deserialize(path, self._scene_ref)
         self._scene_ref.file_path = path
+        self.update_settings(self._scene_ref.step_interval)
+        self._scene_ref.selected_object = None
     
     def save_command(self):
         if not self._scene_ref.file_path is None:

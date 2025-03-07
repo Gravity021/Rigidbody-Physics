@@ -74,6 +74,16 @@ class SettingsWindow(pygame_gui.elements.UIWindow):
                     self.set_step_interval(value)
             except ValueError:
                 Debug.log_error(f"Step Interval field contains invalid float string: {self.step_interval_entry.get_text()}")
+    
+    def update_fields(self, step_interval):
+        self.global_gravity_entry_x.set_text(str(pm.global_gravity.x))
+        self.global_gravity_entry_y.set_text(str(pm.global_gravity.y))
+
+        self.world_scale_entry.set_text(str(pm.world_to_screen_scale))
+        
+        self.timescale_entry.set_text(str(Time.timescale))
+
+        self.step_interval_entry.set_text(str(step_interval))
  
     def on_close_window_button_pressed(self):
         """Override method to only hide the window when the close button is pressed."""

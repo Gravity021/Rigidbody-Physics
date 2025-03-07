@@ -41,6 +41,7 @@ class Application:
 
         self.ui_manager = UIManager(self.window.size, self.event_manager.register_action)
         self.menu_bar_manager = MenuBarUIManager(self.window.size, self.event_manager.register_action)
+        self.menu_bar_manager.menu_bar.update_settings = self.ui_manager.settings_window.update_fields
 
         self.scene = Scene()
         self.event_manager.register_action(pygame.MOUSEBUTTONDOWN, self.scene.object_selected)
